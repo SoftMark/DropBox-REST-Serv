@@ -4,10 +4,10 @@
 
 <div class="list-group">
   <h5 class="h5 list-group-item list-group-item-action active">
-    Email: {{ user.acc.email }}
+    Email: {{ user.acc.email }}  ({{ user.acc.country }})
   </h5>
-  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View</a>
-  <a href="/open_uploader" class="h5 list-group-item list-group-item-action">Upload</a>
+  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View files</a>
+  <a href="/open_uploader" class="h5 list-group-item list-group-item-action">Upload binary</a>
 </div>
 
 
@@ -23,7 +23,14 @@
 
 
 {% if user.visible["files"] %}
-<h5 class="h5 list-group-item list-group-item-action active">Files: </h5>
+<h5 class="h5 list-group-item list-group-item-action active">Files:</h5>
+
+{% for file in user.files %}
+<a href="{{ dbx.files_get_temporary_link(file.path_display).link }}" class="h5 list-group-item list-group-item-action">{{ file.name }}</a>
+
+{% endfor %}
+
+
 {% endif %}
 
 

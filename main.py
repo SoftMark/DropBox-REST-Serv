@@ -32,7 +32,7 @@ def user_page(auth_code):
         flash("Wrong auth code!")
         return index()
     # account.name
-    return render_template("user_page.html", user=mem.user)
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -54,13 +54,13 @@ def login():
 @app.route('/show_user_files')
 def show_user_files():
     mem.user.visible["files"] = not mem.user.visible["files"]
-    return render_template("user_page.html", user=mem.user)
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
 @app.route('/open_uploader')
 def open_uploader():
     mem.user.visible["upload"] = not mem.user.visible["upload"]
-    return render_template("user_page.html", user=mem.user)
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
 if __name__ == "__main__":
