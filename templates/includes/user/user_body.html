@@ -1,9 +1,32 @@
 {% block body %}
 <body>
-<!-- {% block element1 %}{% endblock %}
-// {% block element2 %}{% endblock %} -->
-  {% block DataTable %}
+<h1 class="h3 mb-3 fw-normal">Welcome {{ user.acc.name["display_name"] }}!</h1>
+
+<div class="list-group">
+  <h5 class="h5 list-group-item list-group-item-action active">
+    Email: {{ user.acc.email }}
+  </h5>
+  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View</a>
+  <a href="/open_uploader" class="h5 list-group-item list-group-item-action">Upload</a>
+</div>
+
+
+
+<!--  {% block DataTable %}
   {% include "includes/user/data_table.html" %}
-  {% endblock %}
+  {% endblock %} -->
+
+
+{% if user.visible["upload"] %}
+<h5 class="h5 list-group-item list-group-item-action active">Upload </h5>
+{% endif %}
+
+
+{% if user.visible["files"] %}
+<h5 class="h5 list-group-item list-group-item-action active">Files: </h5>
+{% endif %}
+
+
+
 </body>
 {% endblock %}
