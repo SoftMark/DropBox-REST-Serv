@@ -6,7 +6,7 @@
   <h5 class="h5 list-group-item list-group-item-action active">
     Email: {{ user.acc.email }}  ({{ user.acc.country }})
   </h5>
-  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View files</a>
+  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View/Hide files</a>
   <a href="/open_uploader" class="h5 list-group-item list-group-item-action">Upload binary</a>
 </div>
 
@@ -23,11 +23,15 @@
 
 
 {% if user.visible["files"] %}
+<p></p>
 <h5 class="h5 list-group-item list-group-item-action active">Files:</h5>
+<p></p>
 
-{% for file in user.files %}
+{% for file in user.get_files() %}
 <a href="{{ dbx.files_get_temporary_link(file.path_display).link }}" class="h5 list-group-item list-group-item-action">{{ file.name }}</a>
-
+<a href="/delete/file/{{ file.name }}/"><button type="button" class="btn btn-danger">Delete</button></a>
+<br>
+<p></p>
 {% endfor %}
 
 

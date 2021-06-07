@@ -21,7 +21,6 @@ app.config['SESSION_TYPE'] = 'filesystem'
 
 
 def index():
-    mem.clear_user()
     return render_template("index.html", auth_link=DbxApi._authorize_url)
 
 
@@ -60,6 +59,12 @@ def show_user_files():
 @app.route('/open_uploader')
 def open_uploader():
     mem.user.visible["upload"] = not mem.user.visible["upload"]
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+
+
+@app.route('/delete/file/<string:name>/')
+def delete_file(name):
+    DbxApi.dbx.files_delete("/Binary/"+name)
     return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 

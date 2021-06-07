@@ -7,7 +7,6 @@ class CurrentUser:
     def __init__(self, auth_code):
         self.auth_code = auth_code
         self.auth(auth_code)
-        self.files = []
 
         self.visible = {
             "files": False,
@@ -17,7 +16,6 @@ class CurrentUser:
     def auth(self, auth_code):
         try:
             self.acc = DbxApi.get_account(auth_code)
-            self.files = self.get_files()
         except: self.acc = None
 
     @classmethod
@@ -25,7 +23,6 @@ class CurrentUser:
         result = []
         for file in DbxApi.files_list().entries:
             result.append(file)
-
         return result
 
     def put_file(self):
