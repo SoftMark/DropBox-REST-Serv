@@ -1,6 +1,6 @@
 APP_KEY = "fm8udu4kf2vl8yi"
 APP_SECRET = "fyynsq6tci2jd7e"
-ACCESS_TOKEN = "sl.AyWRXJmy5Rig3SY2Hce_Ta72Yofb-0lHUq4uoHyd1_C1Zo4mLPrWLxI4RXg8yYEg7wrQV1EOZBJ0lzqpDrFOiqtxwpjor0oTHbeoAd4uGpGeu76B21gHNts6m7Vr5RPDR7aE9wf7Pos"
+ACCESS_TOKEN = "sl.AyUARAtRWPlBRZ5dz-oY2J7KCe3GCdRmMMud_WiIFoFj2dMycuaBh5m8dNWVyj6ra482U5sCwlAzTScBMGbCUIrO-Ir8J0bMswglVorxkzAovaB8p5JmOQG0UWlpUgY42Pcx_qlMgj0"
 
 # <div class="container">
 # 	<div class="row">

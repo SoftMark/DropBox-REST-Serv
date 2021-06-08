@@ -24,6 +24,16 @@ def index():
     return render_template("index.html", auth_link=DbxApi._authorize_url)
 
 
+def safe_route(route):
+    def wrapper(*args):
+        try: return route(args)
+        except:
+            flash("Error! Try again please.")
+            return index()
+    return wrapper
+
+
+@safe_route
 @app.route('/user')
 def user_page(auth_code):
     mem.update_user(auth_code)
@@ -34,6 +44,7 @@ def user_page(auth_code):
     return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
+@safe_route
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,19 +61,26 @@ def login():
     return index()
 
 
+@safe_route
 @app.route('/show_user_files')
 def show_user_files():
-    mem.user.visible["files"] = not mem.user.visible["files"]
-    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+    try:
+        mem.user.visible["files"] = not mem.user.visible["files"]
+        return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+    except:
+        flash("Error! Try again please.")
+        return index()
 
 
+@safe_route
 @app.route('/open_uploader')
 def open_uploader():
     mem.user.visible["upload"] = not mem.user.visible["upload"]
     return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
-@app.route('/delete/file/<string:name>/')
+@safe_route
+@app.route('/file/delete/<string:name>/')
 def delete_file(name):
     DbxApi.dbx.files_delete("/Binary/"+name)
     return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
@@ -70,3 +88,7 @@ def delete_file(name):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
