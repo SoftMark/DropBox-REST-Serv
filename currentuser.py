@@ -8,16 +8,17 @@ class CurrentUser:
         self.auth_code = auth_code
         self.auth(auth_code)
         self.files = []
+        self.active = False
 
         self.visible = {
-            "files": False,
+            "files": True,
             "upload": False
         }
 
     def auth(self, auth_code):
         try:
             self.acc = DbxApi.get_account(auth_code)
-            self.get_files()
+            self.auth_code = auth_code
         except: self.acc = None
 
     def get_files(self):
@@ -30,6 +31,12 @@ class CurrentUser:
     def has_files(self):
         if not self.get_files(): return False
         return True
+
+    def activate(self):
+        self.active = True
+
+    def deactivate(self):
+        self.active = False
 
     def put_file(self):
         pass

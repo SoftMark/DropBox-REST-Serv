@@ -11,3 +11,4 @@ class Memory:
     @classmethod
     def update_user(cls, auth_code):
         cls.user.auth(auth_code)
+        cls.user.get_files()

@@ -2,45 +2,19 @@
 <body>
 <h1 class="h3 mb-3 fw-normal">Welcome {{ user.acc.name["display_name"] }}!</h1>
 
-<div class="list-group">
-  <h5 class="h5 list-group-item list-group-item-action active">
-    Email: {{ user.acc.email }}  ({{ user.acc.country }})
-  </h5>
-  <a href="/show_user_files" class="h5 list-group-item list-group-item-action">View/Hide files</a>
-  <a href="/open_uploader" class="h5 list-group-item list-group-item-action">Upload binary</a>
-</div>
+{% block main %}
+{% include "includes/user/user_main.html" %}
+{% endblock %}
 
 
-
-<!--  {% block DataTable %}
-  {% include "includes/user/data_table.html" %}
-  {% endblock %} -->
-
-
-{% if user.visible["upload"] %}
-<h5 class="h5 list-group-item list-group-item-action active">Upload </h5>
-{% endif %}
+{% block upload_form %}
+{% include "includes/user/upload_form.html" %}
+{% endblock %}
 
 
-{% if user.visible["files"] %}
-  <p></p>
-  <h5 class="h5 list-group-item list-group-item-action active">Files:</h5>
-  <p></p>
-
-  {% if user.has_files() %}
-    {% for file in user.files %}
-    <a href="{{ dbx.files_get_temporary_link(file.path_display).link }}" class="h5 list-group-item list-group-item-action">{{ file.name }}</a>
-    <a href="/file/delete/{{ file.name }}/"><button type="button" class="btn btn-danger">Delete</button></a>
-    <br>
-    <p></p>
-  {% endfor %}
-
-  {% else %}
-    <p class="h5 list-group-item list-group-item-action">Files not found..</p>
-
-  {% endif %}
-
-{% endif %}
+{% block Files %}
+{% include "includes/user/user_files.html" %}
+{% endblock %}
 
 
 

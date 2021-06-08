@@ -1,0 +1,19 @@
+{% if user.visible["files"] %}
+  <p></p>
+  <h5 class="h5 list-group-item list-group-item-action active">Files:</h5>
+  <p></p>
+
+  {% if user.has_files() %}
+    {% for file in user.files %}
+    <a href="{{ dbx.files_get_temporary_link(file.path_display).link }}" class="h5 list-group-item list-group-item-action">{{ file.name }}</a>
+    <a href="/user/{{ user.auth_code }}/files/{{ file.name }}/delete/"><button type="button" class="btn btn-danger">Delete</button></a>
+    <br>
+    <p></p>
+  {% endfor %}
+
+  {% else %}
+    <p class="h5 list-group-item list-group-item-action">Files not found..</p>
+
+  {% endif %}
+
+{% endif %}

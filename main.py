@@ -34,17 +34,6 @@ def safe_route(route):
 
 
 @safe_route
-@app.route('/user')
-def user_page(auth_code):
-    mem.update_user(auth_code)
-    if mem.user.acc is None:
-        flash("Wrong auth code!")
-        return index()
-    # account.name
-    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
-
-
-@safe_route
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
@@ -52,24 +41,31 @@ def login():
     if request.method == 'POST':
         auth_code = request.form["auth_code"]
         if auth_code != "":
-            mem.clear_user()
-            return user_page(auth_code=auth_code)
+            mem.update_user(auth_code)
+            if mem.user.acc is not None:
+                mem.user.activate()
+                href = '/user/'+auth_code+'/'
+                return redirect(href)
+            else: flash("Wrong auth code!")
         else: flash("Field is empty!")
 
 #  elif request.method == 'GET':
     #flash('You must be logged in DropBox in current browser!')
+    mem.user.deactivate()
     return index()
 
 
-@safe_route
-@app.route('/show_user_files')
-def show_user_files():
-    try:
-        mem.user.visible["files"] = not mem.user.visible["files"]
-        return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
-    except:
-        flash("Error! Try again please.")
-        return index()
+@app.route('/user/<string:auth_code>/')
+def user_page(auth_code):
+    print("Authorized by " + auth_code)
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+
+
+@app.route('/user/<string:auth_code>/files/')
+def show_user_files(auth_code):
+    print("Displaying " + auth_code + " files")
+    #mem.user.visible["files"] = not mem.user.visible["files"]
+    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
 @safe_route
@@ -79,11 +75,12 @@ def open_uploader():
     return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
 
 
-@safe_route
-@app.route('/file/delete/<string:name>/')
-def delete_file(name):
-    DbxApi.dbx.files_delete("/Binary/"+name)
-    return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+@app.route('/user/<string:auth_code>/files/<string:file_name>/delete/')
+def delete_file(auth_code, file_name):
+    print("User with auth: " + auth_code + " deletes file " + file_name)
+    DbxApi.dbx.files_delete("/Binary/"+file_name)
+    # return render_template("user_page.html", user=mem.user, dbx=DbxApi.dbx)
+    return redirect(f'/user/{auth_code}/files/')
 
 
 if __name__ == "__main__":
