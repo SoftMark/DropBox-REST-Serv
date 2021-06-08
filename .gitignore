@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Secret igonore
-/SECRET.py
+SECRET.py
