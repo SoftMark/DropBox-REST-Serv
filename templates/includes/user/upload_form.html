@@ -1,19 +1,13 @@
-<!-- <form action="/" method="post">
+  <p></p>
+  <h5 class="h5 list-group-item list-group-item-action active">Upload:</h5>
+  <p></p>
 
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" name="auth_code" placeholder="Password">
-      <label for="floatingPassword">Authorization code</label>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Get started!</button>
-
-</form>
-
-<form>
+<form action="/user/{{ user.auth_code }}/files/upload/" method="post" enctype="multipart/form-data">
   <div class="form-group">
-    <label class="h5 list-group-item list-group-item-action" for="formControlFile">Upload binary</label>
-    <input type="file" id="formControlFile">
+    <label for="formFileLg" class="form-label">Choose binary(.bin) file</label>
+    <input class="form-control form-control-lg" id="formFileLg" type="file" name="bin_file" />
+    <p></p>
+    <button type="submit" class="btn btn-success">Upload</button>
   </div>
 </form>
 
--->

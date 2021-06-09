@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% block flashed_messages%}
+{% include "includes/flashes.html" %}
+{% endblock %}
+
 {% block head %}
 {% include "includes/head.html" %}
 {% endblock %}

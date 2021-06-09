@@ -1,5 +1,10 @@
 <div class="list-group">
-  <h5 class="h5 list-group-item list-group-item-action active">
-    Email: {{ user.acc.email }}  ({{ user.acc.country }})
-  </h5>
+  <h5 class="h5 list-group-item list-group-item-action active">Welcome!</h5>
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">Name: {{ user.acc.name["display_name"] }}</li>
+  <li class="list-group-item">Email: {{ user.acc.email }} </li>
+  <li class="list-group-item">Country: {{ user.acc.country }}</li>
+</ul>
 </div>
+<p></p>
+<a href="/"><button type="button" class="btn btn-outline-warning">Log out</button></a>

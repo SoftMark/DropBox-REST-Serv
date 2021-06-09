@@ -2,16 +2,20 @@ import dropbox
 from dropbox import Dropbox
 from dropbox import DropboxOAuth2FlowNoRedirect
 from SECRET import APP_KEY, APP_SECRET, ACCESS_TOKEN
+from werkzeug.utils import secure_filename
+import os
 
 
 class DbxApi:
     dbx = dropbox.Dropbox(ACCESS_TOKEN)
+    dbx_folder_path = "/Binary"
+    serv_folder_path = "bin/"
     _auth_flow = DropboxOAuth2FlowNoRedirect(APP_KEY, APP_SECRET)
     _authorize_url = _auth_flow.start()
 
     @classmethod
     def files_list(cls):
-        return cls.dbx.files_list_folder("/Binary")
+        return cls.dbx.files_list_folder(cls.dbx_folder_path)
 
     @classmethod
     def get_account(cls, auth_code):
@@ -27,6 +31,14 @@ class DbxApi:
     def authorize_url(self):
         return self._authorize_url
 
+    @classmethod
+    def upload(cls, file):
+        filename = secure_filename(file.filename)
+        serv_path = cls.serv_folder_path + f"{filename}"
+        file.save(serv_path)
+        with open(serv_path, 'rb') as bin_f:
+            cls.dbx.files_upload(bin_f.read(), cls.dbx_folder_path+f"/{filename}")
+        os.remove(serv_path)
 
 
 

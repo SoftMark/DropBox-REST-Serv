@@ -38,6 +38,10 @@ class CurrentUser:
     def deactivate(self):
         self.active = False
 
-    def put_file(self):
-        pass
+    def upload_bin(self, file):
+        if file.filename[-4:len(file.filename)] == ".bin":
+            DbxApi.upload(file)
+            return True
+        return False
+
 
