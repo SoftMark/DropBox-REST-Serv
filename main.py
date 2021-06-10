@@ -102,7 +102,7 @@ def upload_file():
 
 
 # Log out
-@app.route('user/logout')
+@app.route('/user/logout')
 def logout():
     try:
         Mem.deactivate_user()
