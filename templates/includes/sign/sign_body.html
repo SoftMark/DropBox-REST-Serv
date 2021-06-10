@@ -1,18 +1,7 @@
 {% block body %}
 <body>
-<!-- {% block element1 %}{% endblock %}
-// {% block element2 %}{% endblock %} -->
   {% block Sign %}
   {% include "includes/sign/signing_form.html" %}
   {% endblock %}
-
-
-
-  {% block Scripts %}
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-  <!-- <script type="module" src="{{ url_for('static', filename='js/front-end.js') }}"></script> -->
-  {% endblock %}
 </body>
-
-
 {% endblock %}

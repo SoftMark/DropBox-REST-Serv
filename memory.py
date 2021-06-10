@@ -5,10 +5,9 @@ class Memory:
     user = CurrentUser(None)
 
     @classmethod
-    def clear_user(cls):
-        cls.user = CurrentUser(None)
+    def deactivate_user(cls):
+        cls.user.deactivate()
 
     @classmethod
-    def update_user(cls, auth_code):
+    def load_user(cls, auth_code):
         cls.user.auth(auth_code)
-        cls.user.get_files()
